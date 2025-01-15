@@ -33,6 +33,8 @@ function ApplicationPass () {
        },[length,numberAllowed,charAllowed,setPassword, buildPassword])
 
     const copyPasswordToClip = useCallback(() => {
+            passwordRef.current?.select();
+            passwordRef.current?.setSelectionRange(0,999);
             window.navigator.clipboard.writeText(passWord);
     },[passWord])
 
