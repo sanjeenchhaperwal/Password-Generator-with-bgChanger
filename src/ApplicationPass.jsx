@@ -1,5 +1,5 @@
 
-import { useState,useCallback,useEffect } from "react"
+import { useState,useCallback,useEffect,useRef } from "react"
 
 function ApplicationPass () {
 
@@ -7,6 +7,10 @@ function ApplicationPass () {
     const [numberAllowed, setNumberAllowed ] = useState(false);
     const [charAllowed, setCharAllowed] = useState(false);
     const [passWord, setPassword] = useState("");
+
+    // useRef Hook
+
+    const passwordRef = useRef(null);
 
     const buildPassword = useCallback(() => {
         
@@ -28,6 +32,9 @@ function ApplicationPass () {
         buildPassword()
        },[length,numberAllowed,charAllowed,setPassword, buildPassword])
 
+    const copyPasswordToClip = useCallback(() => {
+            window.navigator.clipboard.writeText(passWord);
+    },[passWord])
 
     return(
          <div className="border-4 border-white rounded-3xl h-[320px] w-[700px] p-8 text-4xl text-orange-500 text-center bg-gray-950 shadow-xl">
@@ -40,9 +47,10 @@ function ApplicationPass () {
                     value={passWord}
                     className="outline-none pb-[4px] px-3 w-full bg-gray-700 text-white"
                     placeholder="Password"
-                    readOnly 
+                    readOnly
+                    ref={passwordRef}
                 />
-                <button className="outline-none bg-blue-800 text-white px-3 shrink-0">Copy</button>
+                <button onClick={copyPasswordToClip} className="outline-none bg-blue-800 text-white px-3 shrink-0">Copy</button>
             </div>
 
             <div className="flex text-sm gap-x-10 mx-10 mt-10">
